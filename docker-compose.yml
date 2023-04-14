@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: alienregapp:latest
+    container_name: web
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/alienregappdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  db:
+    image: postgres:latest
+    restart: always
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=alienregappdb
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
