@@ -1,0 +1,9 @@
+com/andreika47/ctf/alienreg/controller/RegistrationController.class
+com/andreika47/ctf/alienreg/controller/AdminController.class
+com/andreika47/ctf/alienreg/model/ID.class
+com/andreika47/ctf/alienreg/exceptions/IncorrectIDException.class
+com/andreika47/ctf/alienreg/model/Registration.class
+com/andreika47/ctf/alienreg/service/RegistrationService.class
+com/andreika47/ctf/alienreg/repository/RegistrationRepository.class
+com/andreika47/ctf/alienreg/controller/IDController.class
+com/andreika47/ctf/alienreg/AlienRegApp.class

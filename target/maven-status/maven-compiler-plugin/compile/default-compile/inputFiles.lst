@@ -1,0 +1,9 @@
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/controller/RegistrationController.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/model/ID.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/exceptions/IncorrectIDException.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/controller/AdminController.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/repository/RegistrationRepository.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/service/RegistrationService.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/controller/IDController.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/model/Registration.java
+/Users/andreika47/Desktop/CTF/AlienRegApp/src/main/java/com/andreika47/ctf/alienreg/AlienRegApp.java
