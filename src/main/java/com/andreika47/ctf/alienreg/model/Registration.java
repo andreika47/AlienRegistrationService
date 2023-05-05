@@ -1,6 +1,7 @@
 package com.andreika47.ctf.alienreg.model;
 
 import com.mifmif.common.regex.Generex;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -9,13 +10,14 @@ import javax.persistence.*;
 public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", length = 6, nullable = false)
     private long id;
 
-    @Column(name = "planet")
+    @Column(name = "planet", length = 32, nullable = false)
     private String planet;
-    @Column(name = "oldID")
+    @Column(name = "oldID", length = 32, nullable = false)
     private String oldID;
-    @Column(name = "newID")
+    @Column(name = "newID", length = 32, nullable = false)
     private String newID;
 
     public Registration() {

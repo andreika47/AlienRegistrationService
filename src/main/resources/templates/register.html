@@ -1,16 +1,14 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org">
 <head> 
-    <title>Register</title> 
+    <title>Registration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p th:text="Register" />
-    <form method="post" action="/id">
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id" required>
-            <br>
-            <button type="submit">Submit</button>
-        </form>
+    <h1>Registration</h1>
+    <form action="#" th:action="@{/register}" th:object="${id}" method="post">
+        <p>ID: <input type="text" th:field="*{id}" /></p>
+        <p><input type="submit" value="Submit" /></p>
+    </form>
 </body>
 </html>

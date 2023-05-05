@@ -1,7 +1,11 @@
 package com.andreika47.ctf.alienreg.controller;
 
+import com.andreika47.ctf.alienreg.exceptions.IncorrectIDException;
+import com.andreika47.ctf.alienreg.model.ID;
 import com.andreika47.ctf.alienreg.model.Registration;
-import com.andreika47.ctf.alienreg.repository.RegistrationRepository;
+import com.andreika47.ctf.alienreg.service.RegistrationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    private RegistrationRepository registrationRepository;
+    private RegistrationService registrationService;
+    private Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @GetMapping("/")
     public String home(HttpServletRequest request) {
@@ -30,67 +34,46 @@ public class RegistrationController {
     }
 
     @GetMapping("/register")
-    public String register(HttpServletRequest request) {
-        String id = getID(request.getCookies());
+    public String register(HttpServletRequest request, Model model) {
+        String alienID = getID(request.getCookies());
+        model.addAttribute("id", new ID());
 
-        if (id == null) {
+        if (alienID == null) {
             return "register";
         }
-        else {
-            return "redirect:/id";
-        }
+        return "redirect:/id";
     }
 
-    @PostMapping("/id")
-    public String register(String id, HttpServletResponse response, Model model) {
-        String planet = null;
-
-        if (id.matches("[A-Z]{5}-P2-[A-Z]{5}-[0-9]{3}")) {
-            planet = "P2";
-        } else if (id.matches("[A-Z]{5}-P3-[A-Z]{5}-[0-9]{3}")) {
-            planet = "P3";
-        }else if (id.matches("[A-Z]{5}-P4-[A-Z]{5}-[0-9]{3}")) {
-            planet = "P4";
-        }else if (id.matches("[A-Z]{5}-P5-[A-Z]{5}-[0-9]{3}")) {
-            planet = "P5";
-        }
-
-        if (planet == null) {
-            return "redirect:/error";
-        }
-        else {
+    @PostMapping("/register")
+    public String submit(HttpServletResponse response, @ModelAttribute ID id, Model model) {
+        if (id.getId() != null) {
+            logger.info(id.getId());
             try {
-                Registration registration = registrationRepository.save(new Registration(id, planet));
+                Registration registration = registrationService.register(id.getId());
 
-                // Store the ID in a cookie
-                Cookie cookie = new Cookie("AlienID", id);
-                cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
-                response.addCookie(cookie);
+                if (registration != null) {
+                    Cookie cookie = new Cookie("AlienID", registration.getNewID());
+                    cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
+                    cookie.setSecure(false);    // сервис не использует HTTPS
+                    cookie.setHttpOnly(true);
+                    cookie.setDomain("localhost");
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                }
+                else {
+                    model.addAttribute("error", "Unable to register alien wit ID " + id.getId());
+                    return "redirect:/error";
+                }
 
-                model.addAttribute("planet", planet);
-                model.addAttribute("newID", registration.getNewID());
-            } catch (Exception e) {
+            } catch (IncorrectIDException e) {
+                model.addAttribute("error", e.getMessage());
                 return "redirect:/error";
             }
+
             return "redirect:/id";
         }
-    }
-
-    @GetMapping("/id")
-    public String id(HttpServletRequest request, Model model) {
-        String id = getID(request.getCookies());
-
-        if (id == null) {
-            return "redirect:/error";
-        }
         else {
-            List<Registration> registrations = registrationRepository.findByOldID(id);
-
-            if (registrations.size() > 0) {
-                model.addAttribute("planet", registrations.get(0).getPlanet());
-                model.addAttribute("ids", registrations);
-            }
-            return "id";
+            return "redirect:/register";
         }
     }
 

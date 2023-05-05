@@ -5,10 +5,6 @@
     </head>
     <tbody>
     	<h1 th:text="'Hi, alien from ' + ${planet}" />
-    	<p th:text="'Your guest ID: '" />
-    	<tr th:each="id: ${ids}">
-            <td><p th:text="${id.getNewID()}" /></td>
-            <td><p th:text="${id.getNewID()}" /></td>
-        </tr>        
+    	<p th:text="'Your guest ID: ' + ${newID}" />       
     </tbody>
 </html>
