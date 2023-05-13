@@ -28,8 +28,8 @@ services:
       - "5433:5432"
     environment:
       - POSTGRES_DB=alienregappdb
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=BHds@#14hH23SS24@#k
     volumes:
       - db:/var/lib/postgresql/data
 volumes:
