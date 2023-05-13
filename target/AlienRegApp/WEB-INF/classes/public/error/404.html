@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Error</h1>
-    <p>${error}</p>
+    <p th:text="${error != null} ? ${error} : 'Unknown error'"/>
     <a href="/register">Go back to registration page</a>
 </body>
 </html>

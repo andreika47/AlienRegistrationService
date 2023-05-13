@@ -32,6 +32,7 @@ public class IDController {
                 Registration alien = registrations.get(0);
                 model.addAttribute("planet", alien.getPlanet());
                 model.addAttribute("newID", alien.getNewID());
+                model.addAttribute("oldID", alien.getOldID());
             }
             else {
                 model.addAttribute("error", "Unknown alien's ID");

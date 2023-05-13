@@ -30,7 +30,6 @@ COPY tomcat/tomcat-users.xml $CATALINA_HOME/conf
 # Copy WAR file to Tomcat webapps directory
 COPY target/AlienRegApp.war $CATALINA_HOME/webapps
 
-# Expose ports
 EXPOSE 8080
 
 # Set up startup script

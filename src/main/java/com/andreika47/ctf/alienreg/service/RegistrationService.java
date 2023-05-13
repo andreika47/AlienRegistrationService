@@ -32,6 +32,8 @@ public class RegistrationService {
             planet = "P4";
         } else if (oldId.matches("[A-Z]{5}-P5-[A-Z]{5}-[0-9]{3}")) {
             planet = "P5";
+        } else if (oldId.matches("[a-zA-Z0-9]{31}=")) {
+            planet = "FLAG";
         }
 
         if (planet != null) {

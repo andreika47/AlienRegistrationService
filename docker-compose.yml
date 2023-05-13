@@ -33,6 +33,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_DB=alienregappdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
     volumes:
       - db:/var/lib/postgresql/data
 volumes:

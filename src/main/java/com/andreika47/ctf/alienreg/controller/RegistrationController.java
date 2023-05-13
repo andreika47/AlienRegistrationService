@@ -45,15 +45,21 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String submit(HttpServletResponse response, @ModelAttribute ID id, Model model) {
-        if (id.getId() != null) {
+    public String submit(HttpServletRequest request, HttpServletResponse response, @ModelAttribute ID id, Model model) {
+        String alienID = getID(request.getCookies());
+
+        if (alienID != null) {
+            return "redirect:/id";
+        }
+
+        if (id != null && id.getId() != null) {
             logger.info(id.getId());
             try {
                 Registration registration = registrationService.register(id.getId());
 
                 if (registration != null) {
                     Cookie cookie = new Cookie("AlienID", registration.getNewID());
-                    cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
+                    cookie.setMaxAge(30 * 24 * 60 * 60); // 30 дней
                     cookie.setSecure(false);    // сервис не использует HTTPS
                     cookie.setHttpOnly(true);
                     cookie.setDomain("localhost");
@@ -70,10 +76,12 @@ public class RegistrationController {
                 return "redirect:/error";
             }
 
-            return "redirect:/id";
+            model.addAttribute("id", id);
+            return "register";
         }
         else {
-            return "redirect:/register";
+            model.addAttribute("error", "Missing ID parameter");
+            return "redirect:/error";
         }
     }
 
