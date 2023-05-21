@@ -16,4 +16,4 @@
   * Обновить spring-boot, Apache Tomcat до безопасных версий
 
 # Стек-технологий
-Java17, Spring, Maven, Postgre, Apache Tomcat, NGINX
+Java11, Spring, Maven, Postgre, Apache Tomcat, NGINX
