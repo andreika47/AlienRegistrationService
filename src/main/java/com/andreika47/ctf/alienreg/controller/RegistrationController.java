@@ -62,7 +62,6 @@ public class RegistrationController {
                     cookie.setMaxAge(30 * 24 * 60 * 60); // 30 дней
                     cookie.setSecure(false);    // сервис не использует HTTPS
                     cookie.setHttpOnly(true);
-                    cookie.setDomain("localhost");
                     cookie.setPath("/");
                     response.addCookie(cookie);
                 }
@@ -77,7 +76,7 @@ public class RegistrationController {
             }
 
             model.addAttribute("id", id);
-            return "register";
+            return "redirect:/id";
         }
         else {
             model.addAttribute("error", "Missing ID parameter");
